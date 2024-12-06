@@ -12,9 +12,9 @@ const Navbar = () => {
                         isActive ? "text-red-500" : "text-black"
                     }
                 >
-                    Game
+                    Study Revison
                 </NavLink>
-
+                    <NavLink to="game" >Game</NavLink>
                 <NavLink
                     to="/about"
                     className={({ isActive }) =>
@@ -27,6 +27,7 @@ const Navbar = () => {
                 <NavLink to="/post">Posts</NavLink>
             </ul>
             <Outlet />
+            <hr />
         </>
     )
 }

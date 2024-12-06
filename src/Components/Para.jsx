@@ -25,7 +25,7 @@ const Para = ({ children }) => {
 
     }
     return (<>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className='center'>
             <h3 >{value}</h3>
             <button onClick={() => unScramble()}>{btnText}</button>
         </div>

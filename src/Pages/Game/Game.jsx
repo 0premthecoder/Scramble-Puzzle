@@ -25,12 +25,11 @@ const Home = () => {
       <>
         <h1>🫣</h1>
         <h1>Scramble Puzzle</h1>
-        <input type="text" placeholder='Write Something' name="input" id="inp" value={input} onChange={(e)=> setInput(e.target.value)} style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' , margin: "10px"}} />
+        <input type="text" placeholder='Write Something' name="input" id="inp" value={input} onChange={(e)=> setInput(e.target.value)} />
         <button onClick={()=> scramble()}>Scramble it 🎲</button>
         {scrambleWord.map((word, index) => (
            <Para key={index}>{word}</Para>
         ))}
-        <hr />
       </>
     )
 }
