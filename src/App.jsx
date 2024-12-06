@@ -6,6 +6,7 @@ import About from './Pages/About/About';
 import Navbar from './Components/Navbar';
 import Posts from './Components/Posts';
 import StudyRevision from './Pages/Rev/StudyRevision';
+import Pomodoro from './Pages/Pomodora/Pomodora';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='game' element={<Home />} />
         <Route path='about' element={<About />} />
         <Route path='post' element={<Posts/>} />
+        <Route path='pomodora' element={<Pomodoro/>} />
         </Route>
       </Routes>
     </BrowserRouter>

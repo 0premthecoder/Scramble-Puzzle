@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Pomodoro from "../Pomodora/Pomodora";
 
 const StudyRevision = () => {
     const [topics, setTopics] = useState([]);
@@ -7,19 +8,29 @@ const StudyRevision = () => {
     const [startDate, setStartDate] = useState("");
     const [selectedTopic, setSelectedTopic] = useState(null); // For modal
     const [showModal, setShowModal] = useState(false);
+    const [showPomo, setShowPomo] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false)
 
     const gapDays = [1, 2, 4, 7, 12, 20, 33, 54];
 
     useEffect(() => {
         const storedTopics = JSON.parse(localStorage.getItem("topics")) || [];
         setTopics(storedTopics);
+        setIsInitialized(true);
     }, []);
+
+    useEffect(() => {
+        if (isInitialized) {
+            localStorage.setItem("topics", JSON.stringify(topics));
+        }
+    }, [topics, isInitialized])
 
     const addTopic = () => {
         if (!topicName || !startDate) {
             alert("Please enter both topic name and start date.");
             return;
         }
+        console.log(startDate)
         const start = new Date(startDate);
         const revisionDates = gapDays.map((gap) => {
             const date = new Date(start);
@@ -34,7 +45,6 @@ const StudyRevision = () => {
         };
 
         setTopics([...topics, newTopic]);
-        localStorage.setItem("topics", JSON.stringify(topics));
         setTopicName("");
         setStartDate("");
     };
@@ -43,8 +53,6 @@ const StudyRevision = () => {
         const updatedTopics = [...topics];
         updatedTopics[index].completed = !updatedTopics[index].completed;
         setTopics(updatedTopics);
-        localStorage.setItem("topics", JSON.stringify(topics));
-
     };
 
     const getFilteredTopics = () => {
@@ -87,6 +95,17 @@ const StudyRevision = () => {
         setSelectedTopic(null);
     };
 
+    const openObsidian = () => {
+        const obsidianUrl = "obsidian://open?vault=study"; // Replace with your vault name
+        window.open(obsidianUrl, "_blank");
+    };
+
+    // Delete a topic
+    const deleteTopic = (id) => {
+        const updatedTopics = topics.filter((topic) => topic.id !== id);
+        setTopics(updatedTopics);
+    };
+    
     return (
         <>
             <div>
@@ -117,14 +136,17 @@ const StudyRevision = () => {
                 </select>
             </div>
 
+            <button onClick={() => setShowPomo(showPomo ? false : true)}>{showPomo ? "End" : "Do"} Pomodora</button>
+            {showPomo && <Pomodoro />}
+
             <div>
                 {getFilteredTopics().map((topic, index) => (
                     <div
                         key={index}
-                        
+
                         style={{
                             marginBottom: "1rem",
-                           
+
                         }}
                         className="center"
                     >
@@ -133,13 +155,13 @@ const StudyRevision = () => {
                                 color: topic.completed
                                     ? "green"
                                     : topic.displayDate ===
-                                      new Date().toISOString().split("T")[0]
-                                    ? "red"
-                                    : "black",
+                                        new Date().toISOString().split("T")[0]
+                                        ? "red"
+                                        : "black",
                                 textDecoration: topic.completed
                                     ? "line-through"
                                     : "none",
-                                    cursor: "pointer",
+                                cursor: "pointer",
                             }}
                             onClick={() => handleTopicClick(topic)} // Click to open modal
                         >
@@ -151,9 +173,11 @@ const StudyRevision = () => {
                                 type="checkbox"
                                 checked={topic.completed}
                                 onChange={() => handleComplete(index)}
-                                style={{ cursor: "pointer",}}
+                                style={{ cursor: "pointer", }}
                             />
-                            Mark as Complete
+                            <button onClick={() => deleteTopic(topic.id)} style={deleteButtonStyle}>
+                                Delete Topic
+                            </button>
                         </label>
                     </div>
                 ))}
@@ -180,12 +204,26 @@ const StudyRevision = () => {
                     </div>
                 </div>
             )}
+            <br />
+
+            <button onClick={openObsidian}>
+                Open Obsidian
+            </button>
         </>
     );
 };
 
 export default StudyRevision;
 
+const deleteButtonStyle = {
+    padding: "10px 20px",
+    backgroundColor: "red",
+    color: "white",
+    border: "none",
+    borderRadius: "4px",
+    cursor: "pointer",
+    marginLeft: "10px",
+};
 const modalStyles = {
     position: "fixed",
     top: 0,
