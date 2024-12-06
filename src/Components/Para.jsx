@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
 const Para = ({ children }) => {
-    const [value, setValue] = useState("")
+    const [value, setValue] = useState(children)
     const [btnText, setBtnText] = useState("I am Noob 🥲")
 
     function unScramble() {
-        if (value == '') {
+        if (value == children) {
             let v = ''
             for (let i of children) {
                 let n = i.charCodeAt();
@@ -19,13 +19,14 @@ const Para = ({ children }) => {
         }
 
         else {
-            setBtnText("You are Noob 🤫")
+            setBtnText("You are Noob 🤫");
+            setValue(children)
         }
 
     }
     return (<>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <h3 >{value ? value : children}</h3>
+            <h3 >{value}</h3>
             <button onClick={() => unScramble()}>{btnText}</button>
         </div>
     </>

@@ -23,6 +23,8 @@ const Navbar = () => {
                 >
                     About Me
                 </NavLink>
+
+                <NavLink to="/post">Posts</NavLink>
             </ul>
             <Outlet />
         </>
