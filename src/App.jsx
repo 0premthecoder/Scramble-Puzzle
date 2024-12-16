@@ -7,20 +7,24 @@ import Navbar from './Components/Navbar';
 import Posts from './Components/Posts';
 import StudyRevision from './Pages/Rev/StudyRevision';
 import Pomodoro from './Pages/Pomodora/Pomodora';
-
+import Counter from './Pages/Counter/Counter';
+import { store } from './Redux/store'
+import { Provider } from 'react-redux'
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route  path="/" element={<Navbar/>}>
-        <Route index element={<StudyRevision/>}/>
-        <Route path='game' element={<Home />} />
-        <Route path='about' element={<About />} />
-        <Route path='post' element={<Posts/>} />
-        <Route path='pomodora' element={<Pomodoro/>} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store} >
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navbar />}>
+            <Route index element={<StudyRevision />} />
+            <Route path='game' element={<Home />} />
+            <Route path='about' element={<About />} />
+            <Route path='post' element={<Posts />} />
+            <Route path='pomodora' element={<Pomodoro />} />
+            <Route path='c' element={<Counter />} />
+          </Route>
+        </Routes>
+      </BrowserRouter></Provider>
   )
 }
 
