@@ -10,6 +10,7 @@ import Pomodoro from './Pages/Pomodora/Pomodora';
 import Counter from './Pages/Counter/Counter';
 import { store } from './Redux/store'
 import { Provider } from 'react-redux'
+import Todo from './Pages/Todo/Todo';
 function App() {
   return (
     <Provider store={store} >
@@ -22,6 +23,7 @@ function App() {
             <Route path='post' element={<Posts />} />
             <Route path='pomodora' element={<Pomodoro />} />
             <Route path='c' element={<Counter />} />
+            <Route path='todo' element={<Todo/>} />
           </Route>
         </Routes>
       </BrowserRouter></Provider>
